@@ -26,6 +26,8 @@ manager.cookie_name = "some-name"
 client = MongoClient(MONGO_URL)
 db = client['fastapi_njh']
 
+# gitignore 작업 정상적으로 되었는지 확인!
+
 @manager.user_loader
 async def load_user(username: str):   
    
