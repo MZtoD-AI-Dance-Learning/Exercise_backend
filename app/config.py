@@ -29,3 +29,5 @@ NAVER_API_SECRET = get_secret("NAVER_API_SECRET")
 if __name__ == "__main__":
     world = get_secret("hello")
     print(world)
+    print(1)
+    
