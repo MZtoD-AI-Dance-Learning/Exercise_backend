@@ -10,6 +10,7 @@ from app.model import mongodb
 from pathlib import Path
 import asyncio
 from pymongo import MongoClient
+from app.config import MONGO_URL
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -22,7 +23,7 @@ manager = LoginManager(SECRET, token_url="/auth/login", use_cookie=True)
 manager.cookie_name = "some-name"
 
 # mongodb 불러오기
-client = MongoClient("mongodb+srv://nho:lgc15945823@cluster0.v0x0g.mongodb.net/test")
+client = MongoClient(MONGO_URL)
 db = client['fastapi_njh']
 
 @manager.user_loader
