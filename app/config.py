@@ -23,11 +23,9 @@ def get_secret(
 
 MONGO_DB_NAME = get_secret("MONGO_DB_NAME")
 MONGO_URL = get_secret("MONGO_URL")
-NAVER_API_ID = get_secret("NAVER_API_ID")
-NAVER_API_SECRET = get_secret("NAVER_API_SECRET")
 
 if __name__ == "__main__":
     world = get_secret("hello")
     print(world)
-    print(1)
+
     
