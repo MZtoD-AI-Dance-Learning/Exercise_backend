@@ -27,9 +27,6 @@ MONGO_URL = get_secret("MONGO_URL")
 aws_access_key_id = get_secret("aws_access_key_id")
 aws_secret_access_key = get_secret("aws_secret_access_key")
 
-# DB collection
-aws_access_key_id = get_secret("aws_access_key_id")
-
 
 if __name__ == "__main__":
     world = get_secret("hello")

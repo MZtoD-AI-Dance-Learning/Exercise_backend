@@ -6,8 +6,7 @@ from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 import mzd.boto3.file_control as File_control
 import mzd.model.flash_make as Flash_make
-from mzd.routes.auth import get_current_user
-from mzd.routes.auth import login_required
+from mzd.routes.auth import get_current_user, login_required
 
 router = APIRouter()
 

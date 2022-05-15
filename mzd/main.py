@@ -9,7 +9,7 @@ from pathlib import Path
 from pymongo import MongoClient
 from mzd.config import MONGO_URL, MONGO_DB_NAME
 from fastapi.requests import Request
-from mzd.routes import uploader, auth
+from mzd.routes import uploader, auth, mypage
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
 from jinja2 import Undefined
@@ -27,6 +27,7 @@ app.mount("/static", StaticFiles(directory="mzd/static"), name="static")
 
 app.include_router(uploader.router)
 app.include_router(auth.router)
+app.include_router(mypage.router)
 
 # mongodb 불러오기
 client = MongoClient(MONGO_URL)
@@ -34,7 +35,7 @@ db = client[MONGO_DB_NAME]
 
 @app.get("/tutorial", response_class=HTMLResponse)
 def tutorial(request: Request,):
-   context = {'request': request, }
+   context = {'request': request, "username": auth.get_current_user(request)}
    return templates.TemplateResponse("tutorial.html", context)
 
 @app.get("/main")
@@ -42,6 +43,12 @@ def main(request: Request,):
    username = auth.get_current_user(request)
    context = {"request": request, "username": username }
    return templates.TemplateResponse("main.html", context)
+
+@app.get("/webcam")
+def main(request: Request,): 
+   context = {"request": request}
+   return templates.TemplateResponse("ClassPage.html", context)
+
 
 @app.on_event("startup")
 def on_app_start():

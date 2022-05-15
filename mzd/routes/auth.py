@@ -47,9 +47,12 @@ auth_exception = (NotAuthenticatedException, redirect_login)
 # Login Action
 @auth_manager.user_loader()  # type:ignore[operator]
 def load_user(username: str) -> str or None:
-    user = db.user_auth.find_one({'username': username})['username']
-    password = db.user_auth.find_one({'username': username})['password']
-    return user, password
+    try:
+        user = db.user_auth.find_one({'username': username})['username']
+        password = db.user_auth.find_one({'username': username})['password']
+        return user, password
+    except Exception:
+        return None
 
 def get_current_user(request: Request):
     try:
@@ -60,10 +63,10 @@ def get_current_user(request: Request):
 
 def login_required(view):
     @functools.wraps(view)
-    def wrapped_view(request: Request):
+    def wrapped_view(request: Request, **kwargs):
         if get_current_user(request) == None:
             return RedirectResponse(url='/login', status_code=status.HTTP_302_FOUND)       
-        return view(request)
+        return view(request , **kwargs)
     return wrapped_view
 
 @router.get("/login")
@@ -74,7 +77,7 @@ def login(request: Request):
         "signin.html",
         {"request": request, "bad_login": bad_login},
     )
-        
+    
     response.delete_cookie(key="bad_login")
     return response
 
@@ -113,5 +116,5 @@ def signup(request: Request):
 @router.post("/auth/signup")
 async def signup(username: str = Form(...), password: str = Form(...), name: str = Form(...), gender: str = Form(...), age: int = Form(...)):
    db.user_auth.insert_one({"username" : username, "password" : password,  "name" : name, "gender" : gender, "age" : age} ) 
-   resp = RedirectResponse(url="/auth/signin", status_code=302)
+   resp = RedirectResponse(url="/main", status_code=302)
    return resp
