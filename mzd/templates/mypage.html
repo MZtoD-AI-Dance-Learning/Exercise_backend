@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    div {
+        width: 150px;
+        height: 200px;
+    }
+
+    section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: var(--justify-important);
+      }
+      
+</style>
+
+<center>{{name}}의 마이페이지</center>
+<br>
+<br>
+<main>
+<section>
+    {% if length == 0 %}
+    <br>
+    <br>
+    <center>현재 등록된 커버 영상이 없습니다. 커버 영상을 만들어주세요.</center>
+    {% else %}
+    {% for cover in cover_link %}    
+    <div>
+        <img src={{cover.cover_url}} width="150px" height="200px" />
+    </div>
+    {% endfor %}
+    {% endif %}
+</section>
+</main>
+{% endblock %}

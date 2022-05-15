@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div style=" text-align: center;">
+    {% for message in get_flashed_messages(request) %}
+    <div class="{{ message.category }}">{{ message.message }}</div>
+    {% endfor %}
+
+    <form class="validation-form" novalidate method="POST" action="/file_upload">
+        <input placeholder="파일 이름 입력" class="form-line input-text" id="filename" name="filename" type="text">
+        <button class="w-btn w-btn-gra2 w-btn-gra-anim" ; style=" display: inline-block; color:white;">
+            shorts 올리기
+        </button>
+    </form>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,50 @@
+<!-- 네비게이션바 -->
+<style>
+    ul {
+        height: 50px;
+        background: #edb6b6;
+        list-style: none;
+        padding-top: 15px;
+    }
+
+    a img {
+        float: left;
+        width: 100px;
+        height: 100px;
+    }
+
+    ul li {
+        float: right;
+        margin-right: 10px;
+    }
+
+    ul li a {
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    div select {
+        border: solid 2px;
+        border-color: #ef7676;
+    }
+</style>
+{% block navbar_item %}
+<a href="/main"><img src="{{url_for('static', path='/img/MZtoD로고.jpeg')}}"></a>
+{% if username is defined and username is not none %}
+<ul>
+    <li><a class="nav-item nav-link" href="/logout">Logout ({{ username }})</a></li>
+    <li><a class="nav-item nav-link" href="/mypage/{{username}}">mypage </a></li>
+</ul>
+{% else %}
+<ul>
+    <li><a class="nav-item nav-link" href="/auth/signup">signup</a></li>
+    <li><a class="nav-item nav-link" href="/login">signin</a></li>
+</ul>
+{% endif %}
+{% endblock navbar_item %}
