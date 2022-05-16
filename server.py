@@ -2,3 +2,4 @@ import uvicorn
 
 if __name__ == "__main__":
     uvicorn.run("mzd.main:app", host="localhost", port=80, reload=True)
+
