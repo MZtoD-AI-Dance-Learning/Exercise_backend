@@ -13,7 +13,13 @@ from mzd.routes import uploader, auth, mypage
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
 from jinja2 import Undefined
+from fastapi.middleware.cors import CORSMiddleware
 
+origin = origins = ["*"]
+origins = [
+    "http://0.0.0.0:80",
+    "http://13.125.83.93:80",
+]
 JINJA2_ENVIRONMENT_OPTIONS = { 'undefined' : Undefined }
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -21,6 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent
 middleware = [Middleware(SessionMiddleware, secret_key='super-secret')]
 
 app = FastAPI(middleware=middleware)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 SECRET = "secret-key"
 templates = Jinja2Templates(directory=BASE_DIR /"templates")
 app.mount("/static", StaticFiles(directory="mzd/static"), name="static") 
