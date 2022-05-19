@@ -1,50 +1,71 @@
+
 <!-- 네비게이션바 -->
 <style>
-    ul {
-        height: 50px;
-        background: #edb6b6;
-        list-style: none;
-        padding-top: 15px;
+    @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+    .header{
+        height: 70px;
+        display:flex;
+        align-items: center;
+        background-color:rgb(246, 236, 236);
+        position: sticky; /* 배너는 가만히 있어야 해서 스크롤 위치에 따라 위치를 정해준다.*/
+        z-index: 100;  /* 요소가 겹쳐져 있을 때 우선 순위, 클수록 우선순위이다.*/
+        justify-content: space-between;/*가로축 배열, 컨텐츠 간격이 동일하게*/
+        
     }
-
-    a img {
-        float: left;
-        width: 100px;
-        height: 100px;
+    
+    .header_logo{
+        width: 200px;
+        object-fit: contain; /*object-fit은 컨테이너에 딱 맞게 한다는 건데, contain은 이미지 비율이 유지되면서 크기가 작아진다.*/
+        margin-top:20px;
+        margin-bottom: 20px;
+        
     }
-
-    ul li {
-        float: right;
-        margin-right: 10px;
+    
+    .header_option{
+        display:flex;
+        margin-left:10px;
+        margin-right:10px;
+        color:black;
+        font-family: 'NanumSquare', sans-serif;
+        
     }
-
-    ul li a {
-        font-size: 20px;
-        color: white;
-        font-weight: bold;
+    
+    .header_nav{
+        display: flex;
+        
     }
-
-    h2 {
-        text-align: center;
-        margin-top: 10px;
+    
+    *{
+        text-decoration-line: none;
+        color:black
     }
-
-    div select {
-        border: solid 2px;
-        border-color: #ef7676;
-    }
-</style>
-{% block navbar_item %}
-<a href="/main"><img src="{{url_for('static', path='/img/MZtoD로고.jpeg')}}"></a>
-{% if username is defined and username is not none %}
-<ul>
-    <li><a class="nav-item nav-link" href="/logout">Logout ({{ username }})</a></li>
-    <li><a class="nav-item nav-link" href="/mypage/{{username}}">mypage </a></li>
-</ul>
-{% else %}
-<ul>
-    <li><a class="nav-item nav-link" href="/auth/signup">signup</a></li>
-    <li><a class="nav-item nav-link" href="/login">signin</a></li>
-</ul>
-{% endif %}
-{% endblock navbar_item %}
+    </style>
+    
+    {% block navbar_item %}
+    <div class="header">
+    <a href="/main"><img class="header_logo"; src="{{url_for('static', path='/img/MZtoD로고.jpeg')}}"></a>
+    {% if username is defined and username is not none %}
+    <div class= "header_nav">
+        <div class= "header_option">
+                <a class="" href="/logout">Logout ({{ username }})</a>
+        </div>
+        <div class= "header_option">
+                <a class="" href="/mypage/{{username}}">mypage </a>
+        </div>
+    </div>
+    
+    
+    {% else %}
+    <div class= "header_nav">
+        <div class= "header_option">
+                <a  href="/login">로그인</a>
+        </div>
+        <div class= "header_option">
+                <a href="/signup">회원가입</a>
+        </div>
+    </div>
+    {% endif %}
+    </div>
+    {% endblock navbar_item %}
+    
+    
