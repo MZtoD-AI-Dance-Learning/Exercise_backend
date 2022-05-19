@@ -14,12 +14,14 @@ from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
 from jinja2 import Undefined
 from fastapi.middleware.cors import CORSMiddleware
+from mzd.routes.auth import login_required
 
 origin = origins = ["*"]
 origins = [
     "http://0.0.0.0:80",
     "http://13.125.83.93:80",
 ]
+
 JINJA2_ENVIRONMENT_OPTIONS = { 'undefined' : Undefined }
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -48,18 +50,18 @@ client = MongoClient(MONGO_URL)
 db = client[MONGO_DB_NAME]
 
 @app.get("/tutorial", response_class=HTMLResponse)
-def tutorial(request: Request,):
+async def tutorial(request: Request,):
    context = {'request': request, "username": auth.get_current_user(request)}
    return templates.TemplateResponse("tutorial.html", context)
 
 @app.get("/main")
-def main(request: Request,): 
+async def main(request: Request,): 
    username = auth.get_current_user(request)
    context = {"request": request, "username": username }
    return templates.TemplateResponse("main.html", context)
 
 @app.get("/webcam")
-def main(request: Request,): 
+def webcam(request: Request,): 
    context = {"request": request}
    return templates.TemplateResponse("ClassPage.html", context)
 

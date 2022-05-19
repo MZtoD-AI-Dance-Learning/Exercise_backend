@@ -26,7 +26,5 @@ def mypage(request: Request, username: str):
     username = get_current_user(request)
     name = db.user_auth.find_one({'username': username})['name']
     cover_link = db.user_cover.find({"username": username }, {"_id": False,"cover_url": True } )
-    # for x in cover_link:
-    #     print(x)
     context = {'request': request, "username": username, "name": name, 'cover_link': cover_link, "length": cover_link.count()}
     return templates.TemplateResponse("mypage.html", context)

@@ -28,3 +28,8 @@ def upload(request: Request, filename: str = Form(...)):
    File_control.upload_dance(filename)
    Flash_make.flash(request, "춤 영상 업로드 성공!", "success")
    return RedirectResponse(url="/file_upload", status_code=302)
+
+@router.get("/upload_file")
+def file_uploader(request: Request, ):
+   hi = "안녕하세요"
+   return hi

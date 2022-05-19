@@ -46,7 +46,7 @@ auth_exception = (NotAuthenticatedException, redirect_login)
 
 # Login Action
 @auth_manager.user_loader()  # type:ignore[operator]
-def load_user(username: str) -> str or None:
+async def load_user(username: str) -> str or None:
     try:
         user = db.user_auth.find_one({'username': username})['username']
         password = db.user_auth.find_one({'username': username})['password']
@@ -63,14 +63,14 @@ def get_current_user(request: Request):
 
 def login_required(view):
     @functools.wraps(view)
-    def wrapped_view(request: Request, **kwargs):
+    async def wrapped_view(request: Request, **kwargs):
         if get_current_user(request) == None:
-            return RedirectResponse(url='/login', status_code=status.HTTP_302_FOUND)       
+            return await RedirectResponse(url='/login', status_code=status.HTTP_302_FOUND)       
         return view(request , **kwargs)
     return wrapped_view
 
 @router.get("/login")
-def login(request: Request):
+async def login(request: Request):
     bad_login = request.cookies.get("bad_login")
     
     response = templates.TemplateResponse(
@@ -82,10 +82,10 @@ def login(request: Request):
     return response
 
 @router.post("/auth/login")
-def auth_login(request: Request, data: OAuth2PasswordRequestForm = Depends()):
+async def auth_login(data: OAuth2PasswordRequestForm = Depends()):
     username = data.username
     password = data.password
-    user = load_user(username)
+    user = await load_user(username)
     
     if not user or password != user[1]:
         response = RedirectResponse(url="/login", status_code=status.HTTP_302_FOUND)
@@ -108,12 +108,12 @@ async def logout(request: Request):
     return response
 
 # Signup Action
-@router.get("/auth/signup", response_class=HTMLResponse)
-def signup(request: Request):
+@router.get("/signup", response_class=HTMLResponse)
+async def signup(request: Request):
    context = {'request': request, }          
-   return templates.TemplateResponse("signup.html", context)
+   return templates.TemplateResponse("signup_mztod.html", context)
 
-@router.post("/auth/signup")
+@router.post("/signup")
 async def signup(username: str = Form(...), password: str = Form(...), name: str = Form(...), gender: str = Form(...), age: int = Form(...)):
    db.user_auth.insert_one({"username" : username, "password" : password,  "name" : name, "gender" : gender, "age" : age} ) 
    resp = RedirectResponse(url="/main", status_code=302)
