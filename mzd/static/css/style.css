@@ -92,8 +92,6 @@ video::-webkit-media-controls-time-remaining-display {display: none} /* 음소�
 video::-webkit-media-controls-mute-button {display: none} /* 볼륨 조절 슬라이드 */ 
 video::-webkit-media-controls-volume-slider {display: none} /* 괄호에 display: none !important; 를 추가하면된다. 예 ) 전체화면 전환 버튼을 숨긴다. 다만 더블클릭으로 전체화면이 되는 기능등은 그대로고 단지 버튼만 없앤다. */ 
 
-<<<<<<< HEAD
-=======
 .header{
     height: 70px;
     align-items: center;
@@ -131,4 +129,3 @@ video::-webkit-media-controls-volume-slider {display: none} /* 괄호에 display
     text-decoration-line: none;
     color:black
 }
->>>>>>> ff9ee53dd5d6571d56668250dddcc58c023dc0b5
