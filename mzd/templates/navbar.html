@@ -1,6 +1,5 @@
 
 <!-- 네비게이션바 -->
-<<<<<<< HEAD
 <style>
     @import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
     .header{
@@ -44,10 +43,6 @@
     
     {% block navbar_item %}
     <div class="header">
-=======
-{% block navbar_item %}
-<div class="header">
->>>>>>> ff9ee53dd5d6571d56668250dddcc58c023dc0b5
     <a href="/main"><img class="header_logo"; src="{{url_for('static', path='/img/MZtoD로고.jpeg')}}"></a>
     {% if username is defined and username is not none %}
     <div class= "header_nav">
@@ -58,12 +53,8 @@
                 <a class="" href="/mypage/{{username}}">mypage </a>
         </div>
     </div>
-<<<<<<< HEAD
     
     
-=======
-
->>>>>>> ff9ee53dd5d6571d56668250dddcc58c023dc0b5
     {% else %}
     <div class= "header_nav">
         <div class= "header_option">
@@ -73,17 +64,8 @@
                 <a href="/signup">회원가입</a>
         </div>
     </div>
-<<<<<<< HEAD
     {% endif %}
     </div>
     {% endblock navbar_item %}
     
     
-=======
-
-
-{% endif %}
-</div>
-{% endblock navbar_item %}
-
->>>>>>> ff9ee53dd5d6571d56668250dddcc58c023dc0b5
