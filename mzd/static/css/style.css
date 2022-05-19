@@ -92,3 +92,43 @@ video::-webkit-media-controls-time-remaining-display {display: none} /* 음소�
 video::-webkit-media-controls-mute-button {display: none} /* 볼륨 조절 슬라이드 */ 
 video::-webkit-media-controls-volume-slider {display: none} /* 괄호에 display: none !important; 를 추가하면된다. 예 ) 전체화면 전환 버튼을 숨긴다. 다만 더블클릭으로 전체화면이 되는 기능등은 그대로고 단지 버튼만 없앤다. */ 
 
+<<<<<<< HEAD
+=======
+.header{
+    height: 70px;
+    align-items: center;
+    display: flex;
+    background-color:rgb(246, 236, 236);
+    position: sticky; /* 배너는 가만히 있어야 해서 스크롤 위치에 따라 위치를 정해준다.*/
+    top: 0;
+    z-index: 100;  /* 요소가 겹쳐져 있을 때 우선 순위, 클수록 우선순위이다.*/
+    justify-content: space-between;/*가로축 배열, 컨텐츠 간격이 동일하게*/
+    
+}
+
+.header_logo{
+    width: 200px;
+    object-fit: contain; /*object-fit은 컨테이너에 딱 맞게 한다는 건데, contain은 이미지 비율이 유지되면서 크기가 작아진다.*/
+    margin-top:20px;
+    margin-bottom: 20px;
+    
+}
+
+.header_option{
+    display:flex;
+    margin-left:10px;
+    margin-right:10px;
+    color:black;
+    font-family: 'NanumSquare', sans-serif;
+    
+}
+
+.header_nav{
+    display: flex;
+    
+}
+*{
+    text-decoration-line: none;
+    color:black
+}
+>>>>>>> ff9ee53dd5d6571d56668250dddcc58c023dc0b5
