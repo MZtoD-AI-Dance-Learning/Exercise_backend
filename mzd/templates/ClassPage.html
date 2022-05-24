@@ -1,69 +1,58 @@
-<html lang="en">
+{% extends 'base.html' %}
+{% block content %}
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/button.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
-    <title>ClassPage</title>
-    <style>
-        ul{ height:50px; background:#edb6b6; list-style: none; padding-top: 15px;}
-        ul li{float:right; margin-right:10px;}
-        ul li a{font-size:20px; color: white; font-weight: bold; }
-        h3 { text-align: center; }
 
-        #container {
-                margin: auto ;
-                margin-right: 10px;
-                width: 800px;
-                height: 800px;
-                border: 0px;
-                
-            }
-        #videoElement {
-            width: 500px;
-            height: 375px;
-            background-color: #666;
+<style>
+    h3 { text-align: center; }
+    #container {
+            margin: auto ;
+            margin-right: 10px;
+            width: 800px;
+            height: 800px;
+            border: 0px;
         }
-        h2{ text-align:center; margin-top: 10px; }
+    #videoElement {
+        width: 500px;
+        height: 375px;
+        background-color: #666;
+    }
+    h2{ text-align:center; margin-top: 10px; }
+    video {
+        width: 500px;
+        height: 375px;
+        border:1px solid black;
+      }
 
-    </style>
-    <link rel="shortcut icon" type="image⁄x-icon" href="../img/MZtoDfabicon.jpg">
+</style>
+<script src="http://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
+<link rel="shortcut icon" type="image⁄x-icon" href="../img/MZtoDfabicon.jpg">
 </head>
-    <body background="img/kpop_short1.mp4">
-        <img src="../img/MZtoD로고.jpeg"; style="float:left; width:100; height:100;">
-        <ul>
+<body>
+    <!--내 화면 -->
+    <div class="section" style=" width: 500px;height: 375px; border:1px solid black; float:left;margin-right:20px;"> 
+        <video id="video-output" ></video>
+        <br>
+        <span><button id="start-btn">녹화 시작</button></span>
+        <span><button id="finish-btn">녹화 종료 및 저장</button></span>
+    </div>
+    <!--교육/레이블 영상 -->
+    <video autoplay controls loop muted  style=" width: 500px;height: 375px; border:1px solid black; float:left;">
+        <source src="../img/class_label_unestimated.mp4" type="video/mp4" >        
+    </video> 
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-        <li><a href="#"; style="text-decoration-line: none";>sign up</a></li>
-        <li><a href="#"; style="text-decoration-line: none";>sign in</a></li>
-        <h2>&nbsp;&nbsp;&nbsp;클래스 페이지</h2>
-        </ul>
-        <div class="section">
-            <video id="video-output"></video>
-            <br>
-            <span><button id="start-btn">녹화 시작</button></span>
-            <span><button id="finish-btn">녹화 종료</button></span>
-        </div>
-        <div>
-            <form id="A13_form" class="hidden">
-                    <input required maxlength="15"  type="text" placeholder="파일명 "/>
-                    <input type="submit" value="파일 저장" />
-
-            </form>
-
-        </div>
-        <div class="A13_block2">
-            <b id="A13_out" class="hidden"></b><br>
-        </div>
+    <div class="section" style=" width: 320px; height: 250px; clear:both;float:left;margin-left:100px;"> 
+        <video id="recorded-video" controls="" ></video>
+        <form id="filename-form">
+            <input value="파일명" type="text" placeholder="파일명">
+            <button> 파일명 입력</button>
+        </form>
+        <button id="download-btn">다운로드</button>
+    </div>
+    <script type="text/javascript" src="webcam.js"></script>
+</body>
 
 
-        <div class="section">
-            <video id="recorded-video" controls="" src="blob:https://webgldemo.blob.core.windows.net/785786f3-2f82-492f-bcf9-22e4ab5917c2"></video>
-            <br>
-            <button id="download-btn">다운로드</button>
-          </div>
-        <script type="text/javascript" src="{{ url_for('static', path='/js/webcam.js') }}"></script>
-    </body>
-</html>
+
 
 
