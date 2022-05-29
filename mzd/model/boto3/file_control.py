@@ -31,7 +31,7 @@ def upload_dance(data):
     client = s3_connection()
     
     # 업로드할 파일 설정 
-    format = '*{0}.mp4'
+    format = '*{0}.webm'
     file_filter = format.format(data)
     input_path = str(BASE_DIR) + "\\upload"
     files = glob.glob(os.path.join(input_path,file_filter))
@@ -52,3 +52,4 @@ def download_dance():
     key = 'kpop_short1.mp4'
     client.download_file(bucket, key, file_name)
     
+

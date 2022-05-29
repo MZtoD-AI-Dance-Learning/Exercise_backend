@@ -10,6 +10,12 @@ import mzd.model.flash_make as Flash_make
 from mzd.routes.auth import get_current_user, login_required
 import shutil
 from time import sleep
+from mzd.config import MONGO_DB_NAME, MONGO_URL
+from pymongo import MongoClient
+from datetime import datetime
+
+now = datetime.now()
+
 
 router = APIRouter()
 
@@ -19,28 +25,33 @@ templates = Jinja2Templates(directory=BASE_DIR /"templates")
 router.mount("/static", StaticFiles(directory="mzd/static"), name="static") 
 templates.env.globals['get_flashed_messages'] = Flash_make.get_flashed_messages
 
-print(str(BASE_DIR))
-@router.get("/file_upload", response_class=HTMLResponse)
-def file_uploader(request: Request, ):
-   context = {'request': request, "username": get_current_user(request)}
-   return templates.TemplateResponse("file_uploadPage.html", context)
-
-@router.post("/file_upload")
-def upload(request: Request, filename: str = Form(...)):
-   context = {'request': request,}
-   File_control.upload_dance(filename)
-   Flash_make.flash(request, "춤 영상 업로드 성공!", "success")
-   return RedirectResponse(url="/file_upload", status_code=302)
-
+client = MongoClient(MONGO_URL)
+db = client[MONGO_DB_NAME]
 
 @router.post("/fileupload")
-def upload(files: UploadFile = File(...)):
+@login_required
+def upload(request: Request, files: UploadFile = File(...)):
+   username = get_current_user(request)
    path = str(BASE_DIR) + "\\model\\boto3\\upload" + "\\" + str(files.filename) 
    with open(path, "wb") as buffer:
       shutil.copyfileobj(files.file, buffer)
    filename = str(files.filename)
-   filename = filename[:-4]
+   db.user_cover.insert_one({"username" : username, "covername" : "tomboy", "cover_url" : "https://mztod.s3.ap-northeast-2.amazonaws.com/"+ str(filename),"created_date" : str(now.date())})
+   filename = filename[:-5]
    sleep(5)
    File_control.upload_dance(str(filename))
    return RedirectResponse(url="/classPage", status_code=302)
+
+# @router.get("/file_upload", response_class=HTMLResponse)
+# def file_uploader(request: Request, ):
+#    context = {'request': request, "username": get_current_user(request)}
+#    return templates.TemplateResponse("file_uploadPage.html", context)
+
+# @router.post("/file_upload")
+# def upload(request: Request, filename: str = Form(...)):
+#    context = {'request': request,}
+#    File_control.upload_dance(filename)
+#    Flash_make.flash(request, "춤 영상 업로드 성공!", "success")
+#    return RedirectResponse(url="/file_upload", status_code=302)
+
 

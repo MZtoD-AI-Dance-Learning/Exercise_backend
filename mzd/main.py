@@ -15,7 +15,6 @@ from starlette.middleware.sessions import SessionMiddleware
 from jinja2 import Undefined
 from fastapi.middleware.cors import CORSMiddleware
 from mzd.routes.auth import login_required, get_current_user
-
 from typing import List
 
 
@@ -65,11 +64,10 @@ async def main(request: Request,):
 
 @app.get("/classPage")
 @login_required
-def webcam(request: Request,): 
+def webcam(request: Request): 
    username = get_current_user(request)
    context = {"request": request, "username": username }
    return templates.TemplateResponse("ClassPage.html", context)
-
 
 @app.on_event("startup")
 def on_app_start():

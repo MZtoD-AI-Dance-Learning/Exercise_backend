@@ -22,10 +22,8 @@
             <center>현재 등록된 커버 영상이 없습니다. 커버 영상을 만들어주세요.</center>
             {% else %}
             {% for cover in cover_link %}
-            <div>
-                <img src={{cover.cover_url}} width="150px" height="200px" />
-            </div>
+            <a href={{cover.cover_url}}>사진</a>
             {% endfor %}
             {% endif %}
         </section>
-        {% endblock %}
+{% endblock %}
