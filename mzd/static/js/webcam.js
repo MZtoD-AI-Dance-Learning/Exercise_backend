@@ -3,8 +3,9 @@
 
 const videoOutput = document.getElementById('video-output');
 const startBtn = document.getElementById('start-btn');
-const downloadBtn = document.getElementById('download-btn');
+const pauseBtn= document.getElementById('pause-btn');
 const finishBtn = document.getElementById('finish-btn');
+const downloadBtn = document.getElementById('download-btn');
 const recordedVideo = document.getElementById('recorded-video');
 const s3_upload= document.getElementById('s3_upload');
 
@@ -45,6 +46,10 @@ startBtn.addEventListener('click', function () {
   };
 
   // 3. 녹화 중지 이벤트 핸들러 등록
+pauseBtn.addEventListener('click', function () {
+  mediaRecorder.pause();
+});
+
 mediaRecorder.onstop = function () {
   // createObjectURL로 생성한 url을 사용하지 않으면 revokeObjectURL 함수로 지워줘야합니다.
   // 그렇지 않으면 메모리 누수 문제가 발생합니다.
@@ -52,12 +57,10 @@ mediaRecorder.onstop = function () {
     URL.revokeObjectURL(recordedMediaURL);
   }
 
-  const blob = new Blob(recordedChunks, { type: 'video/mp4;' });
-  
+  const blob = new Blob(recordedChunks, { type: 'video/webm;' });
   recordedMediaURL = URL.createObjectURL(blob);
   recordedVideo.src = recordedMediaURL;
   };
-
   mediaRecorder.start();
 });
 
@@ -67,6 +70,7 @@ finishBtn.addEventListener('click', function () {
   if (mediaRecorder) {
     // 5. 녹화 중지
     mediaRecorder.stop();
+    alert("녹화 종료")
   }
 });
 

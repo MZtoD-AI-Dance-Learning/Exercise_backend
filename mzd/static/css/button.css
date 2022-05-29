@@ -1,5 +1,19 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
 
+@font-face { 
+    font-family: 'NanumGothic';
+    src: url('/fonts/NanumGothic.eot');
+    src: url('/fonts/NanumGothic.eot') format('embedded-opentype'),
+    url('/fonts/NanumGothic.woff') format('woff');}
+
+
+@font-face { 
+    font-family: 'NanumGothic';
+    src: url('/fonts/NanumGothic.eot');
+    src: url('/fonts/NanumGothic.eot') format('embedded-opentype'),
+    url('/fonts/NanumGothic.woff') format('woff');}
+
+@import url('https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css');
 
 
 
@@ -13,7 +27,7 @@ button {
     display: inline-block;
     padding: 15px 30px;
     border-radius: 15px;
-    font-family: "paybooc-Light", sans-serif;
+font-family: 'NanumSquare', sans-serif;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     text-decoration: none;
     font-weight: 600;
@@ -24,7 +38,7 @@ button {
     position: relative;
     padding: 15px 30px;
     border-radius: 15px;
-    font-family: "paybooc-Light", sans-serif;
+    font-family: 'NanumGothic', 'serif';
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     text-decoration: none;
     font-weight: 600;
@@ -107,13 +121,15 @@ button {
 }
 
 .w-btn-red {
-    background-color: #ff5f2e;
+    background-color: #d32b2b;
     color: #e1eef6;
 }
 
 .w-btn-skin {
     background-color: #f8e6e0;
-    color: #6e6e6e;
+    color: #905a45;
+    font-weight:bold;
+    box-shadow:none;
 }
 
 .w-btn-yellow {

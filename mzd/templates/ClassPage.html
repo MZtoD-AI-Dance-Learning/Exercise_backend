@@ -5,23 +5,45 @@
 <style>
     h3 { text-align: center; }
     #container {
-            margin: auto ;
-            margin-right: 10px;
-            width: 800px;
-            height: 800px;
-            border: 0px;
-        }
+                margin: auto ;
+                margin-right: 10px;
+                width: 800px;
+                height: 800px;
+                border: 0px;
+    }
     #videoElement {
-        width: 500px;
-        height: 375px;
         background-color: #666;
     }
     h2{ text-align:center; margin-top: 10px; }
-    video {
-        width: 500px;
-        height: 375px;
-        border:1px solid black;
-      }
+
+    body {font-family: 'NanumGothic', 'serif';}
+    
+    .vidoe1{
+        position: relative;
+        width: 100%;
+        height:auto;
+        object-fit: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: -100;
+        background-size: cover;
+    }
+    .video1-text{
+        position: abosolute;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+    }
+    .video1-text p{
+        z-index: 1000;
+    }
+    .video1-button{
+        position: abosolute;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+    }
 
 </style>
 <script src="http://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
@@ -30,35 +52,60 @@
 </head>
 <body>
     <!--내 화면 -->
-    <div class="section" style=" width: 500px;height: 375px; border:1px solid black; float:left;margin-right:20px;"> 
+    <div class="video1" style=" width: 600px; height: 475px;  float:left; "> 
+        <p style="text-align: center;">사용자 화면</p>
         <video id="video-output" ></video>
-        <br>
-        <span><button id="start-btn">녹화 시작</button></span>
-        <span><button id="finish-btn">녹화 종료 및 저장</button></span>
+        <div class="video1-text" >
+            <p style="color: rgb(255, 255, 255); margin-top:-10%; font-size: 20px; margin-left:5%">time</p>
+            <p id="stopwatch" style="color: rgb(255, 255, 255); margin-top:-10%; font-size: 20px; margin-left:5%">00:00:00</p>
+        </div>
+        <div class="video-button">
+            <span><button id="start-btn" class="w-btn w-btn-skin" onclick="startClock()">Start</button></span>
+            <span><button id="pause-btn"class="w-btn w-btn-skin" onclick="stopClock()">Pause</button></span>
+            <span><button id="finish-btn"class="w-btn w-btn-skin" onclick="resetClock()">Save</button></span>
+        </div> 
     </div>
     <!--교육/레이블 영상 -->
-    <video autoplay controls loop muted  style=" width: 500px;height: 375px; border:1px solid black; float:left;">
-        <source src="{{ url_for('static', path='/img/class_label_unestimated.mp4') }}" type="video/mp4" >        
-    </video> 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div class="video1" style=" float:right;">
+        <p style="text-align: center;">컨텐츠 화면</p>
+        <video autoplay controls loop muted  style=" width: 850px; height:475px; object-fit: cover;">
+            <source src="{{ url_for('static', path='/img/class_label_unestimated.mp4') }}"  type="video/webm" >        
+        </video> 
+        </div>
 
-    <div class="section" style=" width: 320px; height: 250px; clear:both;float:left;margin-left:100px;"> 
+        <br><br> <br><br><br><br><br><br><br><br> <br><br><br><br><br><br><br><br> 
+        <br><br> <br><br><br><br><br><br><br><br> <br><br><br><br><br><br>
+    <!--녹화 영상 -->
+    <div class="video1" style=" width: 400px; height: 350px; float:left;"> 
+        <p style="text-align: center;">녹화 영상</p>
         <video id="recorded-video" controls="" ></video>
         <form id="filename-form">
             <input value="파일명" type="text" placeholder="파일명">
-            <button> 파일명 입력</button>
+            <button class="w-btn w-btn-skin"> filename</button>
+            <button id="download-btn" class="w-btn w-btn-skin"style="float:left;">다운로드</button>
         </form>
-        <button id="download-btn">다운로드</button>
+    </div>
+    <!--스코어링 영상 -->
+    <div class="video1" style="float:right;">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <p style="text-align: center;">스코어링 화면</p>
+        <video autoplay controls loop muted  style=" width: 850px; height:475px;  object-fit: cover;">
+            <source src="{{ url_for('static', path='/img/class_label_estimated') }}" type="video/webm" >        
+        </video> 
+        <div class="video1-text">
+            <p style="color:rgb(227, 79, 79); font-family: 'NanumGothic', 'serif';font-size:30px; font-weight:bold; text-align: right; margin-top:-50%; margin-right: 30px;">SCORE </p>&nbsp;
+            <p id="scoreList"; class="text-rainbow"style="font-family: 'NanumGothic', 'serif'; text-align: right; margin-top:-5%; margin-right:30px;">
+                00</p>
+        </div>
+        <div class="video-button">
+        <span><button id="scoreStart"class="w-btn w-btn-skin">스코어링 출력</button></span>
+        <span><button id="scoreEnd"class="w-btn w-btn-skin">스코어링 중지</button></span>
+        </div>
     </div>
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <form action="/fileupload" enctype="multipart/form-data" method="POST">
-        <input name="files" type="file" multiple>
-        <input type="submit">
-    </form>
-
     <script type="text/javascript" src="{{url_for('static', path='/js/webcam.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', path='/js/Scoring.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', path='/js/stopwatch.js')}}"></script>
 </body>
 
 {% endblock content %}
