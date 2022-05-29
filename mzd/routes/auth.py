@@ -63,9 +63,9 @@ def get_current_user(request: Request):
 
 def login_required(view):
     @functools.wraps(view)
-    async def wrapped_view(request: Request, **kwargs):
+    def wrapped_view(request: Request, **kwargs):
         if get_current_user(request) == None:
-            return await RedirectResponse(url='/login', status_code=status.HTTP_302_FOUND)       
+            return RedirectResponse(url='/login', status_code=status.HTTP_302_FOUND)       
         return view(request , **kwargs)
     return wrapped_view
 

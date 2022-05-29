@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi_login.exceptions import InvalidCredentialsException
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from fastapi import FastAPI, Request, Depends, Form
+from fastapi import FastAPI, Request, Depends, Form, File, UploadFile
 from mzd.model import mongodb
 from pathlib import Path
 from pymongo import MongoClient
@@ -14,7 +14,10 @@ from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
 from jinja2 import Undefined
 from fastapi.middleware.cors import CORSMiddleware
-from mzd.routes.auth import login_required
+from mzd.routes.auth import login_required, get_current_user
+
+from typing import List
+
 
 origin = origins = ["*"]
 origins = [
@@ -51,18 +54,20 @@ db = client[MONGO_DB_NAME]
 
 @app.get("/tutorial", response_class=HTMLResponse)
 async def tutorial(request: Request,):
-   context = {'request': request, "username": auth.get_current_user(request)}
+   context = {'request': request, "username": get_current_user(request)}
    return templates.TemplateResponse("tutorial.html", context)
 
 @app.get("/main")
 async def main(request: Request,): 
-   username = auth.get_current_user(request)
+   username = get_current_user(request)
    context = {"request": request, "username": username }
    return templates.TemplateResponse("main.html", context)
 
-@app.get("/webcam")
+@app.get("/classPage")
+@login_required
 def webcam(request: Request,): 
-   context = {"request": request}
+   username = get_current_user(request)
+   context = {"request": request, "username": username }
    return templates.TemplateResponse("ClassPage.html", context)
 
 
