@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends, status, Form, HTTPException
+from fastapi import APIRouter, Request, Depends, Form
 from pymongo import MongoClient
 from pathlib import Path
 from fastapi.templating import Jinja2Templates
@@ -25,8 +25,6 @@ templates.env.globals['get_flashed_messages'] = Flash_make.get_flashed_messages
 def mypage(request: Request, username: str):
     username = get_current_user(request)
     name = db.user_auth.find_one({'username': username})['name']
-    cover_link = db.user_cover.find({"username": username }, {"_id": False,"cover_url": True, "thubnail_image": True } )
-    for i in cover_link:
-        print(i)
+    cover_link = db.user_cover.find({"username": username }, {"_id": False,"cover_url": True, "thubnail_image": True, "covername": True } )
     context = {'request': request, "username": username, "name": name, 'cover_link': cover_link, "length": cover_link.count()}
     return templates.TemplateResponse("mypage.html", context)

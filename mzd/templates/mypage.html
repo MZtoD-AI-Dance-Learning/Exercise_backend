@@ -22,8 +22,12 @@
             <center>현재 등록된 커버 영상이 없습니다. 커버 영상을 만들어주세요.</center>
             {% else %}
             {% for cover in cover_link %}
-            <a href={{cover.cover_url}}>사진</a>
+                <div>
+                <p>커버영상 제목 : {{cover.covername}} <p/>
+                <a href={{cover.cover_url}}><img src={{cover.thubnail_image}} width="150px" height="200px" /></a>
+                </div>
             {% endfor %}
             {% endif %}
         </section>
+        
 {% endblock %}
