@@ -62,12 +62,19 @@ async def main(request: Request,):
    context = {"request": request, "username": username }
    return templates.TemplateResponse("main.html", context)
 
-@app.get("/classPage")
+@app.get("/classPage0")
 @login_required
 def webcam(request: Request): 
    username = get_current_user(request)
    context = {"request": request, "username": username }
-   return templates.TemplateResponse("ClassPage.html", context)
+   return templates.TemplateResponse("ClassPage0.html", context)
+
+@app.get("/classPage1")
+@login_required
+def webcam(request: Request): 
+   username = get_current_user(request)
+   context = {"request": request, "username": username }
+   return templates.TemplateResponse("ClassPage1.html", context)
 
 @app.on_event("startup")
 def on_app_start():

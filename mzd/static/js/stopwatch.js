@@ -11,10 +11,11 @@ function printTime() {
 
 //시계 시작 - 재귀호출로 반복실행
 function startClock() {
+    setTimeout(5000);
     printTime();
     stopClock();
     timerId = setTimeout(startClock, 1000);
-}
+};
 
 //시계 중지
 function stopClock() {
@@ -38,3 +39,4 @@ function getTimeFormatString() {
 
     return String(hour).padStart(2, '0') + ":" + String(min).padStart(2, '0') + ":" + String(sec).padStart(2, '0');
 }
+

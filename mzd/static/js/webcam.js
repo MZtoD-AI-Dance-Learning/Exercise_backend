@@ -34,7 +34,7 @@ startBtn.addEventListener('click', function () {
   let recordedChunks = [];
   // 1.MediaStream을 매개변수로 MediaRecorder 생성자를 호출
   mediaRecorder = new MediaRecorder(mediaStream, {
-    mimeType: 'video/webm;',
+    mimeType: 'video/webm; codecs=vp9',
   });
 
   // 2. 전달받는 데이터를 처리하는 이벤트 핸들러 등록
@@ -57,7 +57,7 @@ mediaRecorder.onstop = function () {
     URL.revokeObjectURL(recordedMediaURL);
   }
 
-  const blob = new Blob(recordedChunks, { type: 'video/mp4;' });
+  const blob = new Blob(recordedChunks, { type: 'video/webm;' });
   recordedMediaURL = URL.createObjectURL(blob);
   recordedVideo.src = recordedMediaURL;
   };
@@ -131,3 +131,4 @@ function filenameSubmit(event){
 
 
 filenameForm.addEventListener("submit",filenameSubmit)
+
