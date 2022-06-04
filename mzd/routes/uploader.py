@@ -28,7 +28,7 @@ db = client[MONGO_DB_NAME]
 @login_required
 def upload(request: Request, files: UploadFile = File(...)):
    username = get_current_user(request)
-   path = str(BASE_DIR) + "\\model\\s3_upload\\upload" + "\\" + str(files.filename) 
+   path = str(str(BASE_DIR) + "\\model\\s3_upload\\upload" + "\\" + str(files.filename))
    
    # upload 디렉토리에 web에서 받아온 파일 복사
    with open(path, "wb") as buffer:
