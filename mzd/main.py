@@ -6,8 +6,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Request, Depends, Form, File, UploadFile
 from mzd.model import mongodb
 from pathlib import Path
-from pymongo import MongoClient
-from mzd.config import MONGO_URL, MONGO_DB_NAME
 from fastapi.requests import Request
 from mzd.routes import uploader, auth, mypage, classpage
 from starlette.middleware import Middleware
@@ -15,10 +13,10 @@ from starlette.middleware.sessions import SessionMiddleware
 from jinja2 import Undefined
 from fastapi.middleware.cors import CORSMiddleware
 from mzd.routes.auth import login_required, get_current_user
-from typing import List
 
 
 origin = origins = ["*"]
+
 # 고정 ip
 origins = [
     "http://52.79.231.93:80",
@@ -44,12 +42,13 @@ SECRET = "secret-key"
 templates = Jinja2Templates(directory=BASE_DIR /"templates")
 app.mount("/static", StaticFiles(directory="mzd/static"), name="static") 
 
-# 라우팅 경로들
+# Blueprint
 app.include_router(uploader.router)
 app.include_router(auth.router)
 app.include_router(mypage.router)
 app.include_router(classpage.router)
 
+# 첫 페이지 불러오기
 @app.get("/main")
 async def main(request: Request,): 
    username = get_current_user(request)
@@ -58,7 +57,8 @@ async def main(request: Request,):
 
 @app.get("/tutorial", response_class=HTMLResponse)
 async def tutorial(request: Request,):
-   context = {'request': request, "username": get_current_user(request)}
+   username = get_current_user(request)
+   context = {'request': request, "username": username}
    return templates.TemplateResponse("indexPage/tutorial.html", context)
 
 @app.on_event("startup")
