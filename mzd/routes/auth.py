@@ -20,7 +20,7 @@ db = client[MONGO_DB_NAME]
 
 # directory 환경설정
 BASE_DIR = Path(__file__).resolve().parent.parent
-templates = Jinja2Templates(directory=str(BASE_DIR) /"templates")
+templates = Jinja2Templates(directory= str(BASE_DIR /"templates"))
 router.mount("/static", StaticFiles(directory="mzd/static"), name="static") 
 templates.env.globals['get_flashed_messages'] = Flash_make.get_flashed_messages
 

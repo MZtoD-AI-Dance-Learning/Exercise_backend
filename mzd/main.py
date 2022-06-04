@@ -13,6 +13,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from jinja2 import Undefined
 from fastapi.middleware.cors import CORSMiddleware
 from mzd.routes.auth import login_required, get_current_user
+from typing import List
 
 
 origin = origins = ["*"]
@@ -39,7 +40,7 @@ app.add_middleware(
 
 # html 불러오는 위치 설정
 SECRET = "secret-key"
-templates = Jinja2Templates(directory=str(BASE_DIR)/"templates")
+templates = Jinja2Templates(directory= str(BASE_DIR /"templates"))
 app.mount("/static", StaticFiles(directory="mzd/static"), name="static") 
 
 # Blueprint
