@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    ul {
+        height: 50px;
+        background: #edb6b6;
+        list-style: none;
+        padding-top: 15px;
+    }
+
+    ul li {
+        float: right;
+        margin-right: 10px;
+    }
+
+    ul li a {
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    div select {
+        border: solid 2px;
+        border-color: #ef7676;
+    }
+</style>
+<div class="video" style=" text-align: center">
+    <video autoplay controls loop muted>
+        <source src="{{ url_for('static', path='/img/kpop_short1.mp4') }}" type="video/mp4">
+    </video>
+    <div class="text">
+        <b>AI와 함께 k-pop <br> 댄스를 배워보세요</b>
+
+    </div>
+</div>
+
+<div id="img" style="text-align: center; opacity: 0.5;">
+    <img src="{{ url_for('static', path='/img/human_pose_girl_dancing.gif') }}">
+    <div class="text">
+        <b>이제는 포즈에스티메이션과 함께 춤추세요</b>
+    </div>
+</div>
+
+
+<div style=" text-align: center;">
+    <form action="/auth/signup" method="GET">
+        <button type="submit" class="w-btn w-btn-gra2 w-btn-gra-anim" ; style=" display: inline-block; color:white;">
+            회원가입하기
+        </button>
+    </form>
+</div>
+{% endblock %}

@@ -1,6 +1,4 @@
-import re
-from fastapi import APIRouter, Depends, Request, Form , Header, UploadFile, File
-from fastapi.responses import HTMLResponse
+from fastapi import APIRouter, Depends, Request, Form , Header, UploadFile, Fileponse, File
 from fastapi.templating import Jinja2Templates
 from starlette.responses import RedirectResponse
 from pathlib import Path
@@ -38,7 +36,7 @@ def upload(request: Request, files: UploadFile = File(...)):
    filename = str(files.filename)
    filename = filename[:-4]
    
-   # MongoDB에 영상 링크 저장
+   # MongoDB에 개인별 영상 링크 저장
    db.user_cover.insert_one({"username" : username, "covername" : "tomboy", "cover_url" : "https://mztod.s3.ap-northeast-2.amazonaws.com/"+ str(filename)+"_ffmpeg.mp4","created_date" : str(now.date()), 
                              "thubnail_image" : "https://mztod.s3.ap-northeast-2.amazonaws.com/class_thumbnail/blackMamba.png"} )
  
@@ -46,18 +44,7 @@ def upload(request: Request, files: UploadFile = File(...)):
    
    # ffmpeg로 변환한 파일을 s3에 업로드
    File_control.upload_dance(str(filename))
-   return RedirectResponse(url="/classPage", status_code=302)
+   return RedirectResponse(url="/classPage0", status_code=302)
 
-# @router.get("/file_upload", response_class=HTMLResponse)
-# def file_uploader(request: Request, ):
-#    context = {'request': request, "username": get_current_user(request)}
-#    return templates.TemplateResponse("file_uploadPage.html", context)
-
-# @router.post("/file_upload")
-# def upload(request: Request, filename: str = Form(...)):
-#    context = {'request': request,}
-#    File_control.upload_dance(filename)
-#    Flash_make.flash(request, "춤 영상 업로드 성공!", "success")
-#    return RedirectResponse(url="/file_upload", status_code=302)
 
 

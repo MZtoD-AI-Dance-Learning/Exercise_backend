@@ -54,6 +54,7 @@ async def load_user(username: str) -> str or None:
     except Exception:
         return None
 
+# 현재 유저 불러오기
 def get_current_user(request: Request):
     try:
         current_user = request.cookies.get("access_token")
@@ -61,6 +62,7 @@ def get_current_user(request: Request):
     except Exception:
         return None
 
+# 계정 로그인이 되어야만 작동하게하는 오퍼레이터 생성
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(request: Request, **kwargs):
@@ -72,12 +74,10 @@ def login_required(view):
 @router.get("/login")
 async def login(request: Request):
     bad_login = request.cookies.get("bad_login")
-    
     response = templates.TemplateResponse(
-        "signin.html",
+        "auth/signin.html",
         {"request": request, "bad_login": bad_login},
     )
-    
     response.delete_cookie(key="bad_login")
     return response
 
@@ -102,7 +102,7 @@ async def auth_login(data: OAuth2PasswordRequestForm = Depends()):
 @router.get("/logout")
 async def logout(request: Request):
     response = templates.TemplateResponse(
-        "logout.html", {"request": request, }
+        "auth/logout.html", {"request": request, }
     )
     response.delete_cookie(key="access_token") # 쿠키 삭제
     return response
@@ -111,7 +111,7 @@ async def logout(request: Request):
 @router.get("/signup", response_class=HTMLResponse)
 async def signup(request: Request):
    context = {'request': request, }          
-   return templates.TemplateResponse("signup_mztod.html", context)
+   return templates.TemplateResponse("auth/signup_mztod.html", context)
 
 @router.post("/signup")
 async def signup(username: str = Form(...), password: str = Form(...), name: str = Form(...), gender: str = Form(...), age: int = Form(...)):

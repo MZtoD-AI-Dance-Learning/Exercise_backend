@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+
+<style>
+    h3 { text-align: center; }
+    #container {
+                margin: auto ;
+                margin-right: 10px;
+                width: 800px;
+                height: 800px;
+                border: 0px;
+    }
+    #videoElement {
+        background-color: #666;
+    }
+    h2{ text-align:center; margin-top: 10px; }
+
+    body {font-family: 'NanumGothic', 'serif';}
+    
+    .vidoe1{
+        position: relative;
+        width: 100%;
+        height:auto;
+        object-fit: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: -100;
+        background-size: cover;
+    }
+    .video1-text{
+        position: abosolute;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+    }
+    .video1-text p{
+        z-index: 1000;
+    }
+    .video1-button{
+        position: abosolute;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+    }
+
+</style>
+<script src="http://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
+<link rel="shortcut icon" type="image⁄x-icon" href="{{ url_for('static', path='/img/MZtoDfavicon.ico') }}">
+
+</head>
+<body>
+      <!--내 화면 -->
+      <div class="video1" style=" float:left; "> 
+        <p style="text-align: center; font-weight: bold;">사용자 화면</p>
+        <video id="video-output" style=" width: 650px; height: 475px;"></video>
+        <div class="video1-text" >
+            <p style="color: rgb(255, 255, 255); margin-top:-10%; font-size: 20px; margin-left:5%">time</p>
+            <p id="stopwatch" style="color: rgb(255, 255, 255); margin-top:-10%; font-size: 20px; margin-left:5%">00:00:00</p>
+        </div>
+        <div class="video-button">
+            <span><button id="start-btn" class="w-btn w-btn-skin" onclick="startClock()">Start</button></span>
+            <span><button id="pause-btn"class="w-btn w-btn-skin" onclick="stopClock()">Pause</button></span>
+            <span><button id="finish-btn"class="w-btn w-btn-skin" onclick="resetClock()">Save</button></span>
+        </div> 
+    </div>
+
+    <!--교육/레이블 영상 -->
+    <div class="video1" style="  margin-right: 5%;">
+        <p style="text-align: center;font-weight: bold;">컨텐츠 화면</p>
+        <video id="player"  poster="{{ url_for('static', path='/img/class_poster.jpg') }}" style=" float:right;width: 650px; height:475px; object-fit: cover;"  controls>
+            <source src="https://mztod.s3.ap-northeast-2.amazonaws.com/class_LoveDive_0.mp4" type="video/mp4"  >        
+            <object id="ie_player" width="600" height="475">
+                <param name="AutoStart" value="true">
+                <param name="PlayCount" value="1">
+                <param name="ShowControls" value="true">
+            </object>
+        </video>
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div style="clear:both; text-align:right;"> 
+        <p style="font-weight:bold">다음 동작으로 넘어가세요!</p>
+        <a href="/classPage1" onclick="location.href='ClassPage_1.html'"><img  src="{{url_for('static', path='/img/next_page0.png')}}"style=" width:200px; height:80px; object-fit: cover;"></a>
+    </div>
+    <br><br><br>
+
+    <!--녹화 영상 -->
+    <div class="video1" style="float:left; margin-left:7%; margin-top: 20px;"> 
+        <p style="text-align: center;font-weight: bold;">녹화 영상</p>
+        <video id="recorded-video" controls="" style=" width: 650px; height: 475px;"></video>
+        <form id="filename-form">
+            <input value="파일명" type="text" placeholder="파일명">
+            <button class="w-btn w-btn-skin"> filename</button>
+            <button id="download-btn" class="w-btn w-btn-skin"style="float:left;">다운로드</button>
+        </form>
+        <form action="/fileupload" enctype="multipart/form-data" method="POST">
+            <input name="files" type="file" multiple>
+            <input type="submit">
+        </form>
+    </div>
+    <!--스코어링 영상 -->
+    <div class="video1" style="float:right; margin-right: 5%;">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <p style="text-align: center;font-weight: bold;">스코어링 화면</p>
+        <video id= "scorevideo0" controls style=" object-fit: cover;" poster="{{ url_for('static', path='/img/score_basic_poster.jpg') }}" style=" width: 500px; height: 475px;"> 
+        </video> 
+        <div class="video1-text">
+            <p style="color:rgb(227, 79, 79); font-family: 'NanumSquare', sans-serif;;font-size:35px; font-weight:bold; text-align: right; margin-top:-50%; margin-right: 30px;">SCORE </p>&nbsp;
+            <p id="scoreList"; class="text-rainbow"style="font-family: 'NanumSquare', sans-serif;;font-size:35px; text-align: right; margin-top:-5%; margin-right:30px;">
+                00</p>
+        </div>
+        <div class="video-button">
+            <span><button id="scoreStart"class="w-btn w-btn-skin">스코어링 출력</button></span>
+            <span><button id="scoreEnd"class="w-btn w-btn-skin">스코어링 중지</button></span>
+        </div>
+    </div>
+
+
+<script type="text/javascript" src="{{url_for('static', path='/js/Class.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', path='/js/stopwatch.js')}}"></script>
+
+</body>
+</html>
+
+{% endblock content %}
+

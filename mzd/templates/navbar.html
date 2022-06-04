@@ -51,10 +51,13 @@
     {% if username is defined and username is not none %}
     <div class="header_nav">
         <div class="header_option">
-            <a class="" href="/logout">Logout ({{ username }})</a>
+            <a class="" href="/classPage0">마이클래스</a>
         </div>
         <div class="header_option">
-            <a class="" href="/mypage/{{username}}">mypage </a>
+            <a class="" href="/mypage/{{username}}">마이페이지</a>
+        </div>
+        <div class="header_option">
+            <a class="" href="/logout">로그아웃({{username}})</a>
         </div>
     </div>
 

@@ -27,4 +27,4 @@ def mypage(request: Request, username: str):
     name = db.user_auth.find_one({'username': username})['name']
     cover_link = db.user_cover.find({"username": username }, {"_id": False,"cover_url": True, "thubnail_image": True, "covername": True } )
     context = {'request': request, "username": username, "name": name, 'cover_link': cover_link, "length": cover_link.count()}
-    return templates.TemplateResponse("mypage.html", context)
+    return templates.TemplateResponse("auth/mypage.html", context)

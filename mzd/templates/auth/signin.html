@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+  ul {
+    height: 50px;
+    background: #edb6b6;
+    list-style: none;
+    padding-top: 15px;
+  }
+
+  ul li {
+    float: right;
+    margin-right: 10px;
+  }
+
+  ul li a {
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+  }
+
+  h2 {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  div select {
+    border: solid 2px;
+    border-color: #ef7676;
+  }
+</style>
+<br>
+<br>
+<br>
+<section onkeydown="javascript:onEnterLogin();">
+  <form style="text-align: center;" method="POST" action="/auth/login?{{ request.url.query }}">
+
+    {% if bad_login is defined and bad_login is not none %}
+    <div class="alert alert-block alert-danger">
+      <ul class="m-0">
+        <li>Please enter a correct username and password. Note that both fields
+          may be case-sensitive. {{bad_login}}</li>
+      </ul>
+    </div>
+    {% endif %}
+    <br>
+    <br>
+    <br>
+    <div align="center" class="signin-box">
+      <img src="{{ url_for('static', path='/img/MZtoD로고.jpeg') }}" ;
+        style=" float:center; width:200px; height:200px; clip: rect(20px, 20px, 20px, 20px); z-index:5 ;"><br>
+      <img src="{{ url_for('static', path='/img/signup-ID.png') }}" class="img">&nbsp;
+      <input placeholder="아이디 입력" class="form-line input-text" id="username" name="username" type="text">
+
+
+      <br><br>
+      <img src="{{ url_for('static', path='/img/signup-PW.png') }}" class="img">&nbsp;
+      <input value="" class="form-line input-text" placeholder="비밀번호 입력" id="password" name="password" type="password">
+      <br><br><br>
+      <input type="submit" value="로그인"
+        style="background-color: #ef7676; color:azure; border:0; width:150; height:38; font-weight:bolder;">
+
+    </div>
+
+  </form>
+</section>
+{% endblock %}
+<script type="text/javascript">
+  function onEnterLogin() {
+    var keyCode = window.event.keyCode;
+    if (keyCode == 13) { //엔테키 이면
+      loginForm.submit();
+    }
+  } //onEnterLogin()
+</script>

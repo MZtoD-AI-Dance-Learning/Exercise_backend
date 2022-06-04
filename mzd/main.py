@@ -9,7 +9,7 @@ from pathlib import Path
 from pymongo import MongoClient
 from mzd.config import MONGO_URL, MONGO_DB_NAME
 from fastapi.requests import Request
-from mzd.routes import uploader, auth, mypage
+from mzd.routes import uploader, auth, mypage, classpage
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
 from jinja2 import Undefined
@@ -19,9 +19,9 @@ from typing import List
 
 
 origin = origins = ["*"]
+# 고정 ip
 origins = [
-    "http://0.0.0.0:80",
-    "http://13.125.83.93:80",
+    "http://52.79.231.93:80",
 ]
 
 JINJA2_ENVIRONMENT_OPTIONS = { 'undefined' : Undefined }
@@ -39,35 +39,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# html 불러오는 위치 설정
 SECRET = "secret-key"
 templates = Jinja2Templates(directory=BASE_DIR /"templates")
 app.mount("/static", StaticFiles(directory="mzd/static"), name="static") 
 
+# 라우팅 경로들
 app.include_router(uploader.router)
 app.include_router(auth.router)
 app.include_router(mypage.router)
-
-# mongodb 불러오기
-client = MongoClient(MONGO_URL)
-db = client[MONGO_DB_NAME]
-
-@app.get("/tutorial", response_class=HTMLResponse)
-async def tutorial(request: Request,):
-   context = {'request': request, "username": get_current_user(request)}
-   return templates.TemplateResponse("tutorial.html", context)
+app.include_router(classpage.router)
 
 @app.get("/main")
 async def main(request: Request,): 
    username = get_current_user(request)
    context = {"request": request, "username": username }
-   return templates.TemplateResponse("main.html", context)
+   return templates.TemplateResponse("indexPage/main.html", context)
 
-@app.get("/classPage")
-@login_required
-def webcam(request: Request): 
-   username = get_current_user(request)
-   context = {"request": request, "username": username }
-   return templates.TemplateResponse("ClassPage.html", context)
+@app.get("/tutorial", response_class=HTMLResponse)
+async def tutorial(request: Request,):
+   context = {'request': request, "username": get_current_user(request)}
+   return templates.TemplateResponse("indexPage/tutorial.html", context)
 
 @app.on_event("startup")
 def on_app_start():

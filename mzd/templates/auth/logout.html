@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+<br>
+<div>
+    <h1 style="text-align: center;">
+        로그아웃되었습니다. 이용을 하시려면 로그인을 해주세요.
+    </h1>
+</div>
+
+<script>
+    function redirect() {
+        window.location.href = "/main";
+    }
+
+    setTimeout(redirect, 2000); // 3000 is equivalent to 2 seconds
+</script>
+
+{% endblock content %}

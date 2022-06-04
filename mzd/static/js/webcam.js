@@ -87,14 +87,6 @@ downloadBtn.addEventListener('click', function () {
   }
 });
 
-AWS.config.update({
-    accessKeyId: "AKIA4Y43KNAXD5IMOPNF",
-    secretAccessKey: "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"
-});
-
-AWS.config.region = 'ap-northeast-2';
-
-
 /*s3_upload.addEventListener('click', function () {
   var bucket = new AWS.S3({ params: { Bucket: 'mztod' } });
   var params = {

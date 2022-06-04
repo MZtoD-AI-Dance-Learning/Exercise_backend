@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<br>
+<br>
+
+<section align="center">
+  <form name="login" method="post" action="/signup" style="text-align: center;">
+    <div align="left" class="signup-box">
+
+      <img src="{{url_for('static', path='/img/signup-ID.png')}}" class="img">&nbsp;
+      <input type="text" id="id" name="username" placeholder="아이디 " class="form-line input-text" required>
+
+      <br><br>
+
+      <img src="{{url_for('static', path='/img/signup-PW.png')}}" class="img">&nbsp;
+      <input type="password" id="password" name="password" value="" class="form-line input-text" placeholder="비밀번호 "
+        required>
+      <br><br>
+
+      <img src="{{url_for('static', path='/img/signup-NAME.png')}}" class="img">&nbsp;
+      <input type="text" id="name" name="name" value="" placeholder="이름 " class="form-line input-text">
+      <br><br>
+      <div style="color:#ef7676">
+        <img src="{{url_for('static', path='/img/signup-GENDER.png')}}" class="img">&nbsp;
+        <input type="text" id="gender" name="gender" value="" class="form-line input-text" placeholder="성별" required>
+      </div>
+      <br>
+
+      <img src="{{url_for('static', path='/img/signup-AGE.png')}}" class="img">&nbsp;
+      <input type="text" id="age" name="age" value="" placeholder="나이" class="form-line input-text" required>
+    </div>
+    </select>
+    <br><br>
+    </div>
+    <input type="submit" name="" value="가입완료"
+      style="background-color: #ef7676; color:azure; border:0; width:120; height:38">
+  </form>
+</section>
+
+{% endblock %}

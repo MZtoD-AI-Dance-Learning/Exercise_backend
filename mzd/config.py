@@ -6,6 +6,8 @@ from typing import Optional
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# secret 파일 가져오기
+
 def get_secret(
     key: str,
     default_value: Optional[str] = None,
