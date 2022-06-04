@@ -9,7 +9,7 @@ class FFMConvertor:
     def convert_webm_mp4_subprocess(self, input_file, output_file):
         try:
             # ffmpeg -i test.webm test.mp4
-            command = 'ffmpeg -i ' + input_file +' -filter:v fps=fps=23.98 '+ output_file
+            command = 'ffmpeg -i ' + input_file +'-filter:v fps=fps=23.98 '+ output_file
             subprocess.run(command)
         except:
             print("Some Exception")

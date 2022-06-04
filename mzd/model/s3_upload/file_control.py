@@ -44,7 +44,7 @@ def upload_dance(data):
     # 해당 파일들 업로드 (ffmpeg로 변환한 mp4 파일 업로드)
     for file, name in zip(files, stored_names):
         output_file = file[:-4]+"_ffmpeg.mp4"
-        ffm.convert_webm_mp4_module(r''+ file, r''+ output_file)
+        ffm.convert_webm_mp4_module(r''+ file,r''+ output_file)
         client.upload_file(output_file, bucket, name, ExtraArgs={'ACL': 'public-read'})
     print("유저 영상 s3 업로드 성공")
         
