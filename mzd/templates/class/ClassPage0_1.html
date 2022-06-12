@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <style>
+        h3 { text-align: center; }
+        #container {
+                    margin: auto ;
+                    margin-right: 10px;
+                    width: 800px;
+                    height: 800px;
+                    border: 0px;
+        }
+        #videoElement {
+            background-color: #666;
+        }
+        h2{ text-align:center; margin-top: 10px; }
+        
+        .vidoe1{
+            position: relative;
+            width: 100%;
+            height:auto;
+            object-fit: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: -100;
+            background-size: cover;
+        }
+        .video1-text{
+            position: abosolute;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        .video1-text p{
+            z-index: 1000;
+        }
+        .video1-button{
+            position: abosolute;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="http://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
+</head>
+<body>
+    <br>
+    <!--교육/레이블 영상 Left -->
+    <div class="video1" style="float:left; margin-left: 10%;">
+        <p style="font-size: 20px;text-align: center;font-weight: bold;">컨텐츠 화면</p>
+        <video id="player"  poster="{{ url_for('static', path='/img/class_poster.jpg') }}" style=" width: 550px; height:435px; object-fit: cover;"  controls>
+            <source src="https://mztod.s3.ap-northeast-2.amazonaws.com/class_LoveDive_0.mp4" type="video/mp4"  >        
+            <object id="ie_player" width="600" height="475">
+                <param name="AutoStart" value="true">
+                <param name="PlayCount" value="1">
+                <param name="ShowControls" value="true">
+            </object>
+        </video>
+        <br><br>
+        <p style="font-size:20px;font-weight: bold; float:left;">🔺재생 버튼으로 시작하기!</p>
+        <img src="{{url_for('static', path='/img/next_page0.png')}}"style=" width:150px; height:40px; object-fit: cover;margin-left:210px">
+    </div>
+
+    <!--내 화면 Right-->
+    <div class="video1" style=" float:right; margin-right:2%">
+        <div style="text-align: center;">
+            <p style=" font-size:20px; font-weight: bold;">사용자 화면</p>
+        </div> 
+        <video id="video-output" style="  width: 550px; height:435px; object-fit: cover;" controls></video>
+        <div class="video1-text">
+            <p id="threelist"; class="text-rainbow"style="font-size:35px; font-family: 'NanumSquare', sans-serif; text-align: center; margin-top:-35%; margin-right:15% "></p>
+        </div>
+        <div class="video1-text">
+            <p style="color: rgb(255, 255, 255); margin-top:-12%; font-size: 20px; margin-left:5%">time</p>
+            <p id="stopwatch" style="color: rgb(255, 255, 255); margin-top:-12%; font-size: 20px; margin-left:5%">00:00:00</p>
+        </div>
+        <div class="video-button">
+            <span><button id="start-btn" class="w-btn w-btn-skin" onclick="setTimeout(() => startClock(), 6000)">Start</button></span>
+            <span><button id="pause-btn"class="w-btn w-btn-skin" onclick="stopClock()">Pause</button></span>
+            <span><button id="finish-btn"class="w-btn w-btn-skin" onclick="resetClock()">Save</button></span>
+            <span><button class="w-btn w-btn-skin" onclick="location.reload()">Reset</button></span> <!--아예 페이지 새로고침 함-->
+
+            <p style="font-size:20px;font-weight: bold;">
+                1. Start-Pause-Save 버튼을 눌러 자신의 화면을 촬영하기
+                <br>
+                2. 아래로 스크롤 하여 녹화한 영상을 다운로드 하기 
+                <br>
+                3. 다음 페이지로 이동하여 파일 선택 및 영상을 업로드 하고 제출 버튼 클릭하기
+                <br>
+                4. 다음 페이지로 이동하여 동작 추적 및 스코어링 된 영상을 확인하기
+            </p>
+            <br><br>
+            <p style="font-size:20px;font-weight: bold;">Step1. 녹화 영상 다운로드 하기</p>
+            <form id="filename-form" style="float: left;">
+                <input value="" type="text" placeholder="파일명 저장"><br>
+                <button id="download-btn" class="w-btn w-btn-skin"style="float:left;">다운로드</button>
+            </form>
+            <!--스코어링 페이지로 이동-->
+            <div style="float:right; text-align:center;margin-top:-5%;"> 
+                <p style="font-size:25px;font-weight:bold">next page</p>
+                <a href="/classPage0_2" onclick="location.href='ClassPage0_2.html'">
+                    <img src="{{url_for('static', path='/img/next_page0.png')}}"style=" width:180px; height:43px; object-fit: cover;">
+                </a>
+            </div>
+
+        </div>
+    </div>
+    <div align:right; style="width:50px; height:50px;text-align:right;object-fit: cover; margin-left:38% ">
+        <img src="{{url_for('static', path='/img/down_arrow.png')}}" >
+    </div>
+
+
+</body>
+<script type="text/javascript" src="{{url_for('static', path='/js/Class.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', path='/js/stopwatch.js')}}"></script>
+</html>
+
+{% endblock content %}
+
+

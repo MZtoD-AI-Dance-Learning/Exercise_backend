@@ -2,40 +2,48 @@
 {% block content %}
 
 <style>
-    ul {
-        height: 50px;
-        background: #edb6b6;
-        list-style: none;
-        padding-top: 15px;
-    }
+ ul{ height:50px; background:#edb6b6; list-style: none; padding-top: 15px;}
+        ul li{float:right; margin-right:10px;}
+        ul li a{font-size:20px; color: white; font-weight: bold; }
+        h3 { text-align: center; }
+        h2{ text-align:center; margin-top: 10px; }
+        img{
+            width:100%
+        }
+        video { width: 80%; }
+        .vidoe1{
+            position: relative;
+            width: 100%;
+            height:auto;
+            object-fit: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
 
-    ul li {
-        float: right;
-        margin-right: 10px;
-    }
+        }
+        .video1-text{
+            position: abosolute;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        .video1-text p{
+            margin-top:-150%;
+            text-align: center;
+            font-size: 80px;
+            color: white;
+            z-index: 1000;
+        }
 
-    ul li a {
-        font-size: 20px;
-        color: white;
-        font-weight: bold;
-    }
+        video::-webkit-media-controls-fullscreen-button {display: none} /* 일시정지, 재생 버튼 */ 
+        video::-webkit-media-controls-play-button {display: none} /* 재생 슬라이드..? */ 
+        video::-webkit-media-controls-timeline {display: none} /* 현재 진행 시간 */ 
+        video::-webkit-media-controls-current-time-display{display: none} /* 전체 시간 */ 
+        video::-webkit-media-controls-time-remaining-display {display: none} /* 음소거 버튼 */ 
+        video::-webkit-media-controls-mute-button {display: none} /* 볼륨 조절 슬라이드 */ 
+        video::-webkit-media-controls-volume-slider {display: none} /* 괄호에 display: none !important; 를 추가하면된다. 예 ) 전체화면 전환 버튼을 숨긴다. 다만 더블클릭으로 전체화면이 되는 기능등은 그대로고 단지 버튼만 없앤다. */ 
 
-    h3 {
-        text-align: center;
-    }
-
-    h2 {
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    video {
-        width: 80%;
-    }
-
-    img {
-        width: 80%;
-    }
 </style>
 <div class="video" style=" text-align: center">
     <video autoplay controls loop muted>
@@ -48,19 +56,38 @@
             <br> 댄스를 배워보세요!</p>
     </div>
 </div>
+<br><br>
 
-
-<div id="img" style="text-align:center; font-size: 40px">
-    <img src="{{ url_for('static', path='/img/human_pose_girl_dancing.gif') }}">
-    <div class="text">
-        <b>이제는 AI 모션 인식 기술로<br> 함께 춤춰요~</b>
-    </div>
+<!--튜토리얼 설명 춤추는 여자(왼쪽)-->
+<div id="img" >
+    <img src="{{url_for('static', path='/img/human_pose_girl_dancing.gif')}}" style="width:40%; float:left ;margin-left:5%  "/>
 </div>
 
+<!--춤추는 여자 설명(오른쪽)-->
+<div class="text"; style="font-size: 25px;">
+    <br><br><br><br>
+    <b>&nbsp;&nbsp;&nbsp;&nbsp;MZtoD는 웹캠으로 사용자의 움직임을 촬영하여 17개의 포인트로 인식하여<br>&nbsp;&nbsp; Pose Estimation을 수행합니다.</b> <br><br>
+    <b>&nbsp;&nbsp;&nbsp;&nbsp;⚫Pose estimation이란?</b> <br>
+    <b>&nbsp;&nbsp;&nbsp;&nbsp; 사진이나 영상 속에서 사람의 신체 관절이 어떻게 구성되어 있는지 컴퓨터가<br>&nbsp;&nbsp; 관절 위치를 추정하여 사용자의 움직임을 포착하는 기법</b> <br><br>
+</div>
+<br><br><br><br><br><br><br><br>
 
+<!--클래스,스코어링 설명 이미지(오른쪽)-->
+<img src="{{url_for('static', path='/img/estimated_img.png')}}"  style="width:40%; float:right; margin-right:5% ">
+
+<!--클래스,스코어링 설명(왼쪽))-->
+<div class="text"; style=" font-size: 25px;margin-left:5%">
+    <b style=" font-size: 25px; ">
+        <br><br><br><br><br><br>
+        &nbsp;&nbsp; 웹캠 영상을 초당 10개의 이미지로 분리해 사용자의 동작과 정답 동작의 유사도를<br>&nbsp;  시간 차이를 AI기술로 자동으로 조정하여 점수를 측정합니다. 
+        <br><br>
+        &nbsp;&nbsp;이제는 AI 모션 인식 기술로 함께 춤춰요~
+    </b>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 {% if username is defined and username is not none %}
 <div style=" text-align: center;">
-    <form action="/classPage0" method="GET">
+    <form action="/classPage0_1" method="GET">
         <button type="submit" class="w-btn w-btn-gra2 w-btn-gra-anim" ; style=" display: inline-block; color:white;">
             클래스 페이지
         </button>

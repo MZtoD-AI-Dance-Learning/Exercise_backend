@@ -19,16 +19,17 @@ templates = Jinja2Templates(directory= str(BASE_DIR /"templates"))
 router.mount("/static", StaticFiles(directory="mzd/static"), name="static") 
 templates.env.globals['get_flashed_messages'] = Flash_make.get_flashed_messages
 
-@router.get("/classPage0")
+@router.get("/classPage0_1")
 @login_required
 def webcam(request: Request): 
    username = get_current_user(request)
    context = {"request": request, "username": username }
-   return templates.TemplateResponse("class/ClassPage0.html", context)
+   return templates.TemplateResponse("class/ClassPage0_1.html", context)
 
-@router.get("/classPage1")
+
+@router.get("/classPage0_2")
 @login_required
 def webcam(request: Request): 
    username = get_current_user(request)
    context = {"request": request, "username": username }
-   return templates.TemplateResponse("class/ClassPage1.html", context)
+   return templates.TemplateResponse("class/ClassPage0_2.html", context)

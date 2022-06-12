@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+
+    <style>
+        h3 { text-align: center; }
+        #container {
+                    margin: auto ;
+                    margin-right: 10px;
+                    width: 800px;
+                    height: 800px;
+                    border: 0px;
+        }
+        #videoElement {
+            background-color: #666;
+        }
+        h2{ text-align:center; margin-top: 10px; }
+
+        
+        .vidoe1{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            z-index: -100;
+            background-size: cover;
+        }
+        .video1-text{
+            position: abosolute;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        .video1-text p{
+            z-index: 1000;
+        }
+        .video1-button{
+            position: abosolute;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+    </style>
+    <script src="http://sdk.amazonaws.com/js/aws-sdk-2.1.24.min.js"></script>
+</head>
+<body>
+    <br>
+    <div class="container"style="float:left;margin-top:15%; margin-left:5%;">
+        <p style="font-size:20px;font-weight: bold;">Step2. 녹화 영상 업로드 하기</p>
+    <form id= "fileupload-form" name="나의 댄스 업로드" enctype="multipart/form-data" >
+        <input value="files"  name="files" type="file" multiple >
+        <input type="submit" class="w-btn w-btn-skin">
+    </form>
+
+    <br><br><br>
+    <p style="font-size:20px;font-weight: bold;">Step3. 스코어링 결과 확인하기</p>
+    <p style="font-size:15px;font-weight: bold;">-&nbsp;스코어링 출력 버튼 클릭하기</p>
+
+    </div>
+    <!--스코어링 영상 -->
+    <div class="video1" style=" text-align: center; float:right; margin-right:20%">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <p style="text-align: center;font-weight: bold;">스코어링 화면</p>
+        <video id= "scorevideo0" controls style=" object-fit: cover; width: 650px; height: 450px; " poster="{{url_for('static', path='/img/score_basic_poster.jpg')}}" > 
+        </video>
+        <div class="video1-text">
+            <p style="color:rgb(227, 79, 79); font-family: 'NanumSquare', sans-serif;font-size:30px; font-weight:bold; text-align: center; margin-top:-35%;margin-left:70% ">SCORE </p>&nbsp;
+            <p id="scoreList"; class="text-rainbow"style="font-family: 'NanumSquare', sans-serif;;font-size:30px; text-align: center; margin-top:-3%;margin-left:70% ">00</p>
+        </div>
+        <div class="video-button">
+            <span><button id="scoreStart" class="w-btn w-btn-skin">스코어링 출력</button></span>
+            <span><button id="scoreEnd" class="w-btn w-btn-skin">스코어링 중지</button></span>
+        </div>
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <div style=" text-align:right;"> 
+        <p style="font-weight:bold">다음 동작으로 넘어가세요!</p>
+        <a href="/classPage0_1" onclick="location.href='ClassPage0_1.html'"><img  src="{{url_for('static', path='/img/next_page0.png')}}" style=" width:200px; height:80px; object-fit: cover;"></a>
+    </div>
+</body>
+
+
+<script type="text/javascript" src="{{url_for('static', path='/js/Class.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', path='/js/stopwatch.js')}}"></script>
+</html>
+
+{% endblock content %}
+
+

@@ -56,11 +56,6 @@ async def main(request: Request,):
    context = {"request": request, "username": username }
    return templates.TemplateResponse("indexPage/main.html", context)
 
-@app.get("/tutorial", response_class=HTMLResponse)
-async def tutorial(request: Request,):
-   username = get_current_user(request)
-   context = {'request': request, "username": username}
-   return templates.TemplateResponse("indexPage/tutorial.html", context)
 
 @app.on_event("startup")
 def on_app_start():
